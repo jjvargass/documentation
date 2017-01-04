@@ -1,0 +1,14 @@
+{
+    "gitlab_url": "http://mv12cl01",
+    "gitlab_version": "7.2",
+    "data_dir": "../data",
+    "port": 9090,
+    "column_prefix": "col:",
+    "theme_prefix": "theme:",
+    "mysql": {
+        "host": "localhost",
+        "user": "laboard",
+        "password": "xxxxxx",
+        "database": "laboard"
+    }
+}
