@@ -19,7 +19,7 @@ Documentación
 	- [Instalar Odoo](/src/odoo/install_odoo.md)
 
 - PlayOnLinux
-	- [Instalar Odoo](/src/PlayOnLinux/install_PlayOnLinux.md)
+	- [Instalar PlayOnLinux](/src/PlayOnLinux/install_PlayOnLinux.md)
 
 - Postgres
 	- [Instalar Postgis en Postgres 9.1](/src/postgres/install_tool_postgres9.1.md)
