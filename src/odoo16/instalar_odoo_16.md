@@ -113,7 +113,7 @@ odoo@ubuntu:~$ mkdir /var/log/odoo
 
 ```sh
 exit
-sudo nano /etc/odoo-server.conf
+sudo nano /etc/odoo.conf
 ```
 
 Ahora pegue esta configuración en él.
@@ -149,14 +149,16 @@ Copie y pegue el siguiente contenido en el archivo de unidad systemd odoo16.serv
 Description=Odoo 16
 Requires=postgresql.service
 After=network.target postgresql.service
+
 [Service]
 Type=simple
-SyslogIdentifier=odoo16
+SyslogIdentifier=odoo
 PermissionsStartOnly=true
 User=odoo
 Group=odoo
-ExecStart=/opt/odoo/odoo16-venv/bin/python3 /opt/odoo/odoo16/odoo-bin -c /etc/odoo-server.conf
+ExecStart=/opt/odoo/odoo16-venv/bin/python3 /opt/odoo/odoo16/odoo-bin -c /etc/odoo.conf
 StandardOutput=journal+console
+
 [Install]
 WantedBy=multi-user.target
 ```
@@ -172,3 +174,13 @@ Verifique si Odoo está activo ejecutando este comando:
 sudo systemctl status odoo
 ```
 Ahora abra su navegador web y vaya a http://your_server_ip_address:8016. Esto lo llevará a la página de Odoo.
+
+## Fuentes 
+
+[How to Install Odoo 16 on Ubuntu 22.04 LTS Server](https://www.cybrosys.com/blog/how-to-install-odoo-16-on-ubuntu-22-04-lts-server)
+
+[Odoo 16 Download and Installation on Ubuntu](https://www.globalteckz.com/odoo-16-download-and-installation-on-ubuntu/)
+
+[Step-by-Step Tutorial to Install Odoo 16 ERP on Ubuntu 22.04](https://vegastack.com/tutorials/step-by-step-tutorial-to-install-odoo-16-erp-on-ubuntu-22-04/)
+
+[How to Install Odoo 16 ERP Software on Ubuntu 22.04](https://www.howtoforge.com/how-to-install-odoo-16-on-ubuntu-22-04/)
