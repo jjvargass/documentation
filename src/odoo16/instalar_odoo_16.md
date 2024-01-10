@@ -93,9 +93,6 @@ Después de completar el proceso de instalación de todos los requisitos, salimo
 ```sh
 (odoo16-venv) odoo16@ubuntu:~$ deactivate
 ```
-### Directorios de Odoo
-
-#### Directorio Modulos Desarrollados
 
 **Estando como usuairo odoo**, Ahora podemos crear un nuevo directorio donde almacenaremos nuestros complementos personalizados de Odoo.
 
@@ -104,12 +101,18 @@ odoo@ubuntu:~$
 odoo@ubuntu:~$ mkdir /opt/odoo/odoo16/custom
 ```
 
-#### Directorio Logs
+**Ahora salga del usuario "odoo"**
 ```sh
-odoo@ubuntu:~$ mkdir /var/log/odoo
+exit
 ```
 
-**Ahora salga del usuario "odoo"** y cree el archivo de configuración de Odoo 16.
+Cree el directorio para los logs de odoo
+```sh
+sudo mkdir /var/log/odoo
+sudo chown odoo:odoo /var/log/odoo
+```
+
+Cree el archivo de configuración de Odoo 16.
 
 ```sh
 exit
