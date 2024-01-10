@@ -16,7 +16,8 @@ Documentación
 	- [Instalar Laboar](/src/laboard/install_laboard.md)
 
 - Odoo
-	- [Instalar Odoo](/src/odoo/install_odoo.md)
+	- [Instalar Odoo 8 ](/src/odoo/install_odoo.md)
+	- [Instalar Odoo 16 -2024 ](/src/odoo/install_odoo.md)
 
 - PlayOnLinux
 	- [Instalar PlayOnLinux](/src/PlayOnLinux/install_PlayOnLinux.md)
