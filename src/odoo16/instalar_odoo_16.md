@@ -107,7 +107,6 @@ sudo chown odoo:odoo /var/log/odoo
 Cree el archivo de configuración de Odoo 16.
 
 ```sh
-exit
 sudo nano /etc/odoo.conf
 ```
 
