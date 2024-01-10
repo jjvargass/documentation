@@ -87,38 +87,52 @@ Ahora, procedamos a instalar Odoo.
 (odoo16-venv) odoo@ubuntu:~$ pip3 install wheel
 (odoo16-venv) odoo@ubuntu:~$ pip3 install -r odoo16/requirements.txt
 ```
+
 Después de completar el proceso de instalación de todos los requisitos, salimos del entorno virtual odo16-venv.
 
 ```sh
 (odoo16-venv) odoo16@ubuntu:~$ deactivate
 ```
+### Directorios de Odoo
 
-*Estando como usuairo odoo*, Ahora podemos crear un nuevo directorio donde almacenaremos nuestros complementos personalizados de Odoo.
+#### Directorio Modulos Desarrollados
+
+**Estando como usuairo odoo**, Ahora podemos crear un nuevo directorio donde almacenaremos nuestros complementos personalizados de Odoo.
 
 ```sh
 odoo@ubuntu:~$
 odoo@ubuntu:~$ mkdir /opt/odoo/odoo16/custom
 ```
 
-Ahora salga del usuario "odoo" y cree el archivo de configuración de Odoo 16.
+#### Directorio Logs
+```sh
+odoo@ubuntu:~$ mkdir /var/log/odoo
+```
+
+**Ahora salga del usuario "odoo"** y cree el archivo de configuración de Odoo 16.
 
 ```sh
-sudo nano /etc/odoo16.conf
+exit
+sudo nano /etc/odoo-server.conf
 ```
 
 Ahora pegue esta configuración en él.
 
 ```sh
 [options]
-;Cambiar la contraseña admin_passwd
+; Cambiar la contraseña admin_passwd
 admin_passwd = ChangeP@ss
 db_host = False
 db_port = False
 db_user = odoo
 db_password = False
-addons_path = /opt/odoo16/odoo16/addons,/opt/odoo16/odoo16/custom
+addons_path = /opt/odoo/odoo16/addons,/opt/odoo/odoo16/custom
 xmlrpc_port = 8016
+
+; Habilidar en entorno productivo
+; logfile = /var/log/odoo/odoo-server.log
 ```
+
 Recuerde actualizar el valor de la clave "ChangeP@ss" anterior con una contraseña más segura. Esta contraseña actúa como su contraseña maestra de Odoo, que es necesaria para crear o eliminar bases de datos.
 
 
@@ -141,7 +155,7 @@ SyslogIdentifier=odoo16
 PermissionsStartOnly=true
 User=odoo
 Group=odoo
-ExecStart=/opt/odoo/odoo16-venv/bin/python3 /opt/odoo/odoo16/odoo-bin -c /etc/odoo16.conf
+ExecStart=/opt/odoo/odoo16-venv/bin/python3 /opt/odoo/odoo16/odoo-bin -c /etc/odoo-server.conf
 StandardOutput=journal+console
 [Install]
 WantedBy=multi-user.target
