@@ -45,14 +45,6 @@ Después de la instalación, ejecute este comando para crear un nuevo usuario de
 sudo su - postgres -c "createuser -s odoo"
 ```
 
-
-```sh
-l
-```
-
-```sh
-l
-```
 ## Instalar Odoo
 Es importante cambiar al usuario del sistema que establecimos para Odoo. Este paso es crucial para evitar encontrar problemas relacionados con los derechos de acceso. Entonces podemos cambiar al usuario que hemos creado antes.
 
