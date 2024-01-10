@@ -140,13 +140,13 @@ Recuerde actualizar el valor de la clave "ChangeP@ss" anterior con una contrase�
 Tenemos que crear una unidad systemd para Odoo16 para que pueda comportarse como un servicio.
 
 ```sh
-sudo nano /etc/systemd/system/odoo16.service
+sudo nano /etc/systemd/system/odoo.service
 ```
 Copie y pegue el siguiente contenido en el archivo de unidad systemd odoo16.service:
 
 ```sh
 [Unit]
-Description=Odoo16
+Description=Odoo 16
 Requires=postgresql.service
 After=network.target postgresql.service
 [Service]
@@ -164,11 +164,11 @@ Eso concluye la configuración. Ahora puedes recargar systemd y comenzar a ejecu
 
 ```sh
 sudo systemctl daemon-reload
-sudo systemctl start odoo16
+sudo systemctl start odoo
 ```
 Verifique si Odoo está activo ejecutando este comando:
 
 ```sh
-sudo systemctl status odoo16
+sudo systemctl status odoo
 ```
 Ahora abra su navegador web y vaya a http://your_server_ip_address:8016. Esto lo llevará a la página de Odoo.
