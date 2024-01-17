@@ -64,9 +64,13 @@ apt update
 
 apt install odoo -y
 ```
+### Carpeta modulos personalizados
+
+```sh
+mkdir /usr/lib/python3/dist-packages/odoo/custom
+```
 
 ### Administración de odoo
-
 
 #### Servicio odoo
 
@@ -110,10 +114,14 @@ tail -f -n 100 /var/log/odoo/odoo-server.log
 cat /etc/odoo/odoo.conf
 
 [options]
+; This is the password that allows database perations:
+; admin_passwd = admin
 db_host = False
 db_port = False
 db_user = odoo
 db_password = False
+;addons_path = /usr/lib/python3/dist-packages/odoo/addons
+default_productivity_apps = True
 ```
 
 #### Url de odoo 
