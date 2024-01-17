@@ -17,7 +17,7 @@ Documentación
 
 - Odoo
 	- [Instalar Odoo 8 ](/src/odoo/install_odoo.md)
-	- [Instalar Odoo 16 -2024 ](/src/odoo16/instalar_odoo_16.md)
+	- [Instalar Odoo 16 -2024 ](/src/odoo16/instalar_odoo_16_v2.md)
 
 - PlayOnLinux
 	- [Instalar PlayOnLinux](/src/PlayOnLinux/install_PlayOnLinux.md)
