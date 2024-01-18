@@ -2,7 +2,7 @@
 
 Iniciamos como usuario root
 ```sh
-sudo su - 
+sudo su -
 ```
 
 ## Actualizar el sistema operativo
@@ -70,6 +70,24 @@ apt install odoo -y
 mkdir /usr/lib/python3/dist-packages/odoo/custom
 ```
 
+### Realizar Configuraciones
+
+Configurara el parametro ``admin_passwd`` con una contraseña robusta.
+
+Si se implementa un volumen externo para la metada de la bd se implementa el parametro ``data_dir``.
+
+Recordar apuntar a la carpeta de los modulos personalizados parametro ``addons_path``.
+
+```sh
+sudo nano /etc/odoo/odoo.conf
+
+[options]
+; admin_passwd = admin
+; addons_path = /usr/lib/python3/dist-packages/odoo/addons
+; data_dir = /var/lib/odoo/.local/share/Odoo/filestore
+```
+
+
 ### Administración de odoo
 
 #### Servicio odoo
@@ -126,8 +144,12 @@ default_productivity_apps = True
 
 #### Url de odoo 
 
-Entrar a navegador
+Aplicacion Odoo.
 
 ```sh
-http://IP de Servidor:8069
+http://ip_de_servidor:8069
+```
+Aplicacion Odoo Crear BD.
+```sh
+http://ip_de_servidor:8069/web/database/selector
 ```

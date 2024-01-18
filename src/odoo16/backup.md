@@ -35,3 +35,6 @@ admin_passwd = NcbY23uv9Q$Cn5PRARMf8JCee.LmXE./
 ```
 
 
+# fuente 
+
+[Video 62: Instalación de Odoo 16 en Ubuntu 20.04 y 22.04](https://www.youtube.com/watch?v=tv0fDQxIDyk&t=636s)
