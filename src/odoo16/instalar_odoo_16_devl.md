@@ -21,15 +21,6 @@ Revisamos servicio Postgresql
 systemctl status postgresql
 ```
 
-Revisión de tablas
-
-```sh
-su postgres
-psql postgres postgres
-\l
-```
-
-
 ## Instalación dependencias 
 
 ```sh
@@ -64,85 +55,111 @@ apt update
 
 apt install odoo -y
 ```
-### Carpeta modulos personalizados
+
+Salir de root
 
 ```sh
-mkdir /usr/lib/python3/dist-packages/odoo/custom
+exit
 ```
 
-### Realizar Configuraciones
+### Deshabilitar Servicio
 
-Configurara el parametro ``admin_passwd`` con una contraseña robusta.
-
-Si se implementa un volumen externo para la metada de la bd se implementa el parametro ``data_dir``.
-
-Recordar apuntar a la carpeta de los modulos personalizados parametro ``addons_path``.
+Para no generar conflictos entre la versión que se corre a través del editor de desarrollo y la existente en el sistema, debe desactivar el inicio del servicio Odoo con el comando.
 
 ```sh
-sudo nano /etc/odoo/odoo.conf
-
-[options]
-; admin_passwd = admin
-; addons_path = /usr/lib/python3/dist-packages/odoo/addons
-; data_dir = /var/lib/odoo/.local/share/Odoo/filestore
+sudo update-rc.d odoo disable
+sudo /etc/init.d/odoo stop
 ```
 
+### Configurar usuario odoo en BD
 
-### Administración de odoo
-
-#### Servicio odoo
-
-Ruta del servicio
-```sh
-cat /lib/systemd/system/odoo.service 
-
-[Unit]
-Description=Odoo Open Source ERP and CRM
-After=network.target
-
-[Service]
-Type=simple
-User=odoo
-Group=odoo
-ExecStart=/usr/bin/odoo --config /etc/odoo/odoo.conf --logfile /var/log/odoo/odoo-server.log
-KillMode=mixed
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Comandos de administración del servicio
-```sh
-systemctl status odoo
-
-systemctl start odoo
-
-systemctl restart odoo
-```
-
-#### Logs 
+Configurar el usuario de base de datos odoo con clave odoo
 
 ```sh
-tail -f -n 100 /var/log/odoo/odoo-server.log
+sudo su postgres
+psql -c "ALTER USER odoo WITH PASSWORD 'odoo';"
 ```
 
-#### Archivo de configuración
+### Permitir conexiones locales para odoo
+Como las conexiones de manera local desde el entorno de desarrollo con el usario odoo, debemos realizar las siguiente configuracion en la bd.
 
 ```sh
-cat /etc/odoo/odoo.conf
+sudo nano /etc/postgresql/14/main/pg_hba.conf
 
-[options]
-; This is the password that allows database perations:
-; admin_passwd = admin
-db_host = False
-db_port = False
-db_user = odoo
-db_password = False
-;addons_path = /usr/lib/python3/dist-packages/odoo/addons
-default_productivity_apps = True
+# cambiar la linea 
+local   all             all                                     peer
+
+# Por 
+local   all             all                                     trust
 ```
 
-#### Url de odoo 
+### Crear Directorio de desarrollo
+
+```sh
+# ir a directorio local
+cd 
+
+# creamos directorio git
+mkdir git
+
+# copiamos archivo de condiguraicon
+sudo cp /etc/odoo/odoo.conf git/
+
+# cambiamos el propietario
+sudo chown desarrollo:desarrollo git/odoo.conf 
+```
+
+
+### Correr odoo desde terminal para  desarrollar
+
+```bash
+## PARAMETROS ##
+
+# -r usuario
+# -w password
+# -d base de datos
+# -u actualiza el módulo
+# -i instala el módulo
+
+# --test-enable
+# --stop-after-init
+# --db_host=localhost
+# --test-commit
+```
+
+```bash
+# Ejecutar para desarrollo local
+odoo --config /home/desarrollo/git/odoo.conf -r odoo -w odoo
+```
+
+#### Ejemplos de ejecución
+
+```bash
+# como se corre el servicio en prod
+/usr/bin/python3 /usr/bin/odoo --config /etc/odoo/odoo.conf --logfile /var/log/odoo/odoo-server.log
+```
+
+```bash
+# actualizar moduo web
+odoo -u web -r odoo -w odoo
+```
+
+```bash
+# Estamos corriendo odoo con modulos sisifo
+odoo.py --addons-path=/usr/lib/python2.7/dist-packages/openerp/addons,/var/odoo/odoo-colombia,/var/odoo/geospatial,/var/odoo/openerp-utils/src,/var/odoo/odoo-idu-addons-publico/src -r odoo -w odoo
+```
+
+```bash
+# Instalar modulo plan_mejoramiento_idu
+odoo --config=/etc/odoo/odoo.conf -i plan_mejoramiento_idu -d odoo-ud --stop-after-init -r odoo -w odoo --db_host=localhost
+```
+
+```bash
+# Actualizar modulo plan_mejoramiento_idu y correr pruebas unitarias
+odoo --config=/home/cjvargas3/git/openerp-server.conf -u plan_mejoramiento_idu -d unit_test_plan --log-level=test  --test-enable --stop-after-init -r odoo -w odoo --db_host=localhost --test-commit
+```
+
+### Url de odoo 
 
 Aplicacion Odoo.
 
@@ -152,4 +169,37 @@ http://ip_de_servidor:8069
 Aplicacion Odoo Crear BD.
 ```sh
 http://ip_de_servidor:8069/web/database/selector
+```
+
+## Instalar PGAdmin 4
+
+```sh
+sudo apt install curl
+
+# Install the public key for the repository (if not done previously):
+curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+
+# Create the repository configuration file:
+sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+
+#
+# Install pgAdmin
+#
+
+# Install for both desktop and web modes:
+sudo apt install pgadmin4
+
+
+# URL Documentacion Oficial
+https://www.pgadmin.org/download/pgadmin-4-apt/
+```
+
+
+### Configurar usuario postgres para conexion
+
+Para establecer la conexion local en el pgAdmin debemos proporcionar la contraseña del usaurio, debemos configurar el contraseña para el usuaro postgrs
+
+```sh
+sudo su postgres
+psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
 ```
